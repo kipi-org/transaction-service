@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="masadf" id="202401042155">
+        <createTable tableName="categories">
+            <column name="id" type="number">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="userId" type="number"/>
+            <column name="name" type="varchar"/>
+            <column name="iconUrl" type="varchar"/>
+            <column name="colorCode" type="varchar"/>
+        </createTable>
+        <createSequence sequenceName="category_id_seq"/>
+    </changeSet>
+
+</databaseChangeLog>

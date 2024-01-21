@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="masadf" id="202401042158">
+        <createTable tableName="tx_types">
+            <column name="id" type="number">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar"/>
+        </createTable>
+        <createSequence sequenceName="tx_type_id_seq"/>
+    </changeSet>
+
+    <changeSet author="masadf" id="202401042200">
+        <createTable tableName="transactions">
+            <column name="id" type="number">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="accountId" type="number"/>
+            <column name="txTypeId" type="number">
+                <constraints nullable="false" foreignKeyName="fk_transaction_type" references='tx_types(id)'/>
+            </column>
+            <column name="amount" type="number"/>
+            <column name="date" type="timestamp"/>
+            <column name="categoryId" type="number">
+                <constraints nullable="false" foreignKeyName="fk_transaction_category" references="categories(id)"/>
+            </column>
+            <column name="description" type="varchar"/>
+        </createTable>
+        <createSequence sequenceName="transaction_id_seq"/>
+        <sqlFile path="./scripts/transaction-triggers.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+</databaseChangeLog>

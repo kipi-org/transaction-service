@@ -1,0 +1,4 @@
+package kipi
+
+class ApplicationTest {
+}
