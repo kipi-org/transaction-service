@@ -1,15 +1,18 @@
 package kipi.db
 
+import kipi.Config
 import org.postgresql.ds.PGSimpleDataSource
 import javax.sql.DataSource
 
-class DataSourceConfigurator {
+class DataSourceConfigurator(
+    private val config: Config
+) {
     fun createDataSource(): DataSource {
         val dataSource = PGSimpleDataSource()
-        dataSource.serverNames = arrayOf("localhost")
-        dataSource.databaseName = "postgres"
-        dataSource.user = "postgres"
-        dataSource.password = "6623174119Zz!"
+        dataSource.serverNames = arrayOf(config.dbHost)
+        dataSource.databaseName = config.dbName
+        dataSource.user = config.dbUser
+        dataSource.password = config.dbPassword
 
         return dataSource
     }

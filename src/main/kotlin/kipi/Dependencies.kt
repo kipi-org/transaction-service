@@ -11,6 +11,8 @@ import kipi.services.LimitService
 import kipi.services.TransactionService
 
 class Dependencies {
+    val config = Config()
+
     private val transactionRepository = TransactionRepository()
     private val categoryRepository = CategoryRepository()
     private val limitRepository = LimitRepository()

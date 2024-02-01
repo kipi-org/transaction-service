@@ -12,6 +12,10 @@ import kipi.dto.TransactionDraft
 
 fun Application.routes(deps: Dependencies) = with(deps) {
     routing {
+        get("/health"){
+            call.respond(OK)
+        }
+
         route("/customer/{userId}") {
             post<CategoryDraft>("/category") {
                 call.respond(OK, categoryCreateController.handle(call.userId, it))
