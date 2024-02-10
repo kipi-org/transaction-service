@@ -37,7 +37,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
-    implementation("org.liquibase:liquibase-core:4.20.0")
+    implementation("org.liquibase:liquibase-core:4.16.1")
     implementation("org.postgresql:postgresql:42.5.4")
 
     testImplementation("io.ktor:ktor-server-tests-jvm")
