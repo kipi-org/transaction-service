@@ -10,6 +10,7 @@ class DataSourceConfigurator(
     fun createDataSource(): DataSource {
         val dataSource = PGSimpleDataSource()
         dataSource.serverNames = arrayOf(config.dbHost)
+        dataSource.portNumbers = intArrayOf(config.dbPort)
         dataSource.databaseName = config.dbName
         dataSource.user = config.dbUser
         dataSource.password = config.dbPassword
