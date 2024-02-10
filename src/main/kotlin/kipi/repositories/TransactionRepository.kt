@@ -7,12 +7,10 @@ import kipi.dto.Category
 import kipi.dto.Transaction
 import kipi.dto.TransactionDraft
 import kipi.dto.TransactionType
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 
 class TransactionRepository {
@@ -25,15 +23,26 @@ class TransactionRepository {
                     .map { row -> row[TransactionTypes.id] }.first()
             it[categoryId] = transactionDraft.categoryId
             it[amount] = transactionDraft.amount
-            it[date] = now()
+            it[date] = transactionDraft.date ?: now()
             it[description] = transactionDraft.description
         }[Transactions.id]
     }
 
-    fun findTransactions(accountIds: List<Long>): List<Transaction> = transaction {
+    fun findTransactions(
+        accountIds: List<Long>,
+        from: LocalDateTime? = null,
+        to: LocalDateTime? = null,
+        page: Int? = null,
+        pageSize: Int? = null
+    ): List<Transaction> = transaction {
         (Transactions innerJoin TransactionTypes innerJoin Categories).select {
-            Transactions.accountId inList accountIds
-        }.map { mapToTransaction(it) }
+            val isInList = Transactions.accountId inList accountIds
+            val isFrom = if (from != null) (Transactions.date greaterEq from) else Op.TRUE
+            val isTo = if (to != null) (Transactions.date lessEq to) else Op.TRUE
+
+            isInList and isFrom and isTo
+        }.apply { if (page != null && pageSize != null) this.limit(pageSize, page.toLong() * pageSize.toLong()) }
+            .map { mapToTransaction(it) }
     }
 
     fun deleteTransaction(id: Long) = transaction {

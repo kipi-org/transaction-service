@@ -5,14 +5,12 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import kipi.dto.CategoryDraft
-import kipi.dto.GoalDraft
-import kipi.dto.LimitDraft
-import kipi.dto.TransactionDraft
+import kipi.dto.*
+import java.time.LocalDateTime
 
 fun Application.routes(deps: Dependencies) = with(deps) {
     routing {
-        get("/health"){
+        get("/health") {
             call.respond(OK)
         }
 
@@ -59,8 +57,26 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                 call.respond(OK, goalsFindController.handle(call.userId))
             }
 
-            get("/transactions") {
-                call.respond(OK, transactionFetchController.handle(call.accountsIds))
+            route("/transactions") {
+                get {
+                    call.respond(
+                        OK,
+                        transactionFetchController.handle(
+                            call.accountsIds,
+                            call.from,
+                            call.to,
+                            call.page,
+                            call.pageSize
+                        )
+                    )
+                }
+
+                get("/gaps/{gapType}") {
+                    call.respond(
+                        OK,
+                        gapFetchController.handle(call.accountsIds, call.gapType, call.page, call.pageSize)
+                    )
+                }
             }
 
             delete("/transaction/{transactionId}") {
@@ -98,3 +114,18 @@ private val ApplicationCall.goalId: Long
 
 private val ApplicationCall.transactionId: Long
     get() = this.parameters.getOrFail("transactionId").toLong()
+
+private val ApplicationCall.from: LocalDateTime?
+    get() = this.parameters["from"]?.let { LocalDateTime.parse(it) }
+
+private val ApplicationCall.to: LocalDateTime?
+    get() = this.parameters["to"]?.let { LocalDateTime.parse(it) }
+
+private val ApplicationCall.gapType: GapType
+    get() = this.parameters.getOrFail("gapType").let { GapType.valueOf(it) }
+
+private val ApplicationCall.page: Int
+    get() = this.parameters["page"]?.toInt() ?: 0
+
+private val ApplicationCall.pageSize: Int
+    get() = this.parameters["pageSize"]?.toInt() ?: 15

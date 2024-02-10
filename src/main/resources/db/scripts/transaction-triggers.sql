@@ -27,7 +27,7 @@ create trigger goal_and_limit_recalculating_after_insert
     on transactions
     FOR EACH ROW
     when (NEW.date >= make_date(cast(extract(YEAR from now()) as int),
-                                 cast(extract(MONTH from now()) as int), 1))
+                                cast(extract(MONTH from now()) as int), 1))
 execute procedure goal_and_limit_update_after_insert();
 
 create trigger goal_and_limit_recalculating_after_delete
