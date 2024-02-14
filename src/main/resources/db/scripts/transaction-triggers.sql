@@ -22,6 +22,28 @@ BEGIN
 END
 $$;
 
+create or replace function account_update_after_delete()
+    returns trigger
+    language plpgsql
+as
+$$
+BEGIN
+    update accounts set "balance" = "balance" - OLD."amount" where "id" = OLD."accountId";
+    return OLD;
+END
+$$;
+
+create or replace function account_update_after_insert()
+    returns trigger
+    language plpgsql
+as
+$$
+BEGIN
+    update accounts set "balance" = "balance" + NEW."amount" where "id" = NEW."accountId";
+    return NEW;
+END
+$$;
+
 create trigger goal_and_limit_recalculating_after_insert
     after insert
     on transactions
@@ -35,4 +57,16 @@ create trigger goal_and_limit_recalculating_after_delete
     on transactions
     FOR EACH ROW
 execute procedure goal_and_limit_update_after_delete();
+
+create trigger account_amount_recalculating_after_insert
+    after insert
+    on transactions
+    FOR EACH ROW
+execute procedure account_update_after_insert();
+
+create trigger account_amount_recalculating_after_delete
+    after delete
+    on transactions
+    FOR EACH ROW
+execute procedure account_update_after_delete();
 

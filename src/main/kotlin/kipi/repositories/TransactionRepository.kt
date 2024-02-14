@@ -41,7 +41,8 @@ class TransactionRepository {
             val isTo = if (to != null) (Transactions.date lessEq to) else Op.TRUE
 
             isInList and isFrom and isTo
-        }.apply { if (page != null && pageSize != null) this.limit(pageSize, page.toLong() * pageSize.toLong()) }
+        }.orderBy(Transactions.date to SortOrder.DESC)
+            .apply { if (page != null && pageSize != null) this.limit(pageSize, page.toLong() * pageSize.toLong()) }
             .map { mapToTransaction(it) }
     }
 

@@ -18,7 +18,7 @@ class GoalService(
         val goals = goalRepository.findGoals(existCategories.map { it.id })
 
         if (existCategories.none { it.id == goalDraft.categoryId }) throw CategoryException("This category not exist")
-        if (goals.any { it.categoryId == goalDraft.categoryId }) throw GoalCreateException("Goal With this category already exist")
+        if (goals.any { it.category.id == goalDraft.categoryId }) throw GoalCreateException("Goal With this category already exist")
 
         val draft = if (goalDraft.currentAmount == ZERO) goalDraft.copy(
             currentAmount = transactionService.getTransactions(accountIds!!)

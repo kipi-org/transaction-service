@@ -7,5 +7,5 @@ data class Goal(
     val id: Long,
     val amount: BigDecimal,
     val currentAmount: BigDecimal,
-    val categoryId: Long
+    val category: Category
 ) : Serializable

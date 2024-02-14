@@ -1,10 +1,12 @@
 package kipi.repositories
 
+import kipi.dao.Categories
 import kipi.dao.Limits
 import kipi.dao.Limits.amount
 import kipi.dao.Limits.categoryId
 import kipi.dao.Limits.currentAmount
 import kipi.dao.Limits.id
+import kipi.dto.Category
 import kipi.dto.Limit
 import kipi.dto.LimitDraft
 import org.jetbrains.exposed.sql.ResultRow
@@ -25,7 +27,7 @@ class LimitRepository {
     }
 
     fun findLimits(categoriesIds: List<Long>) = transaction {
-        Limits.select {
+        (Limits innerJoin Categories).select {
             categoryId inList categoriesIds
         }.map { mapToLimit(it) }
     }
@@ -40,6 +42,12 @@ class LimitRepository {
         id = resultRow[id],
         amount = resultRow[amount],
         currentAmount = resultRow[currentAmount],
-        categoryId = resultRow[categoryId]
+        category = Category(
+            id = resultRow[Categories.id],
+            userId = resultRow[Categories.userId],
+            name = resultRow[Categories.name],
+            iconUrl = resultRow[Categories.iconUrl],
+            colorCode = resultRow[Categories.colorCode]
+        )
     )
 }

@@ -7,11 +7,7 @@
     <changeSet author="masadf" id="202401042227">
         <insert tableName="tx_types">
             <column name="id" valueNumeric="nextval('tx_type_id_seq')"/>
-            <column name="name" value="OUTCOME"/>
-        </insert>
-        <insert tableName="tx_types">
-            <column name="id" valueNumeric="nextval('tx_type_id_seq')"/>
-            <column name="name" value="INCOME"/>
+            <column name="name" value="BASE"/>
         </insert>
     </changeSet>
 

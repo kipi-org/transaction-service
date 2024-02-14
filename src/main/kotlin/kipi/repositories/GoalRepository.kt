@@ -1,10 +1,12 @@
 package kipi.repositories
 
+import kipi.dao.Categories
 import kipi.dao.Goals
 import kipi.dao.Goals.amount
 import kipi.dao.Goals.categoryId
 import kipi.dao.Goals.currentAmount
 import kipi.dao.Goals.id
+import kipi.dto.Category
 import kipi.dto.Goal
 import kipi.dto.GoalDraft
 import org.jetbrains.exposed.sql.ResultRow
@@ -24,7 +26,7 @@ class GoalRepository {
     }
 
     fun findGoals(categoriesIds: List<Long>) = transaction {
-        Goals.select {
+        (Goals innerJoin Categories).select {
             categoryId inList categoriesIds
         }.map { mapToGoal(it) }
     }
@@ -39,6 +41,12 @@ class GoalRepository {
         id = resultRow[id],
         amount = resultRow[amount],
         currentAmount = resultRow[currentAmount],
-        categoryId = resultRow[categoryId]
+        category = Category(
+            id = resultRow[Categories.id],
+            userId = resultRow[Categories.userId],
+            name = resultRow[Categories.name],
+            iconUrl = resultRow[Categories.iconUrl],
+            colorCode = resultRow[Categories.colorCode]
+        )
     )
 }
