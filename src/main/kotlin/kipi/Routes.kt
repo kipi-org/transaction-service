@@ -90,6 +90,10 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                     call.respond(OK, transactionCreateController.handle(call.userId, call.accountId, it))
                 }
             }
+
+            get("/categories/statistics") {
+                call.respond(OK, categoriesStatisticsController.handle(call.accountsIds, call.from, call.to))
+            }
         }
     }
 }

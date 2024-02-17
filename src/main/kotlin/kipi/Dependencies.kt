@@ -5,10 +5,7 @@ import kipi.repositories.CategoryRepository
 import kipi.repositories.GoalRepository
 import kipi.repositories.LimitRepository
 import kipi.repositories.TransactionRepository
-import kipi.services.CategoryService
-import kipi.services.GoalService
-import kipi.services.LimitService
-import kipi.services.TransactionService
+import kipi.services.*
 
 class Dependencies {
     val config = Config()
@@ -21,6 +18,7 @@ class Dependencies {
     private val transactionService = TransactionService(transactionRepository, categoryService)
     private val limitService = LimitService(limitRepository, categoryService, transactionService)
     private val goalService = GoalService(goalRepository, categoryService, transactionService)
+    private val statisticsService = StatisticsService(transactionService)
     val transactionCreateController = TransactionCreateController(transactionService)
     val transactionFetchController = TransactionFetchController(transactionService)
     val categoryCreateController = CategoryCreateController(categoryService)
@@ -34,4 +32,5 @@ class Dependencies {
     val goalDeleteController = GoalDeleteController(goalService)
     val transactionDeleteController = TransactionDeleteController(transactionService)
     val gapFetchController = GapFetchController(transactionService)
+    val categoriesStatisticsController = CategoriesStatisticsController(statisticsService)
 }
