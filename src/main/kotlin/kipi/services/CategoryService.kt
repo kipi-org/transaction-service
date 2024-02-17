@@ -11,7 +11,7 @@ class CategoryService(
     fun createCategory(userId: Long, categoryDraft: CategoryDraft): Long {
         val existCategories = categoryRepository.findUserCategories(userId)
 
-        if (existCategories.any { it.name == categoryDraft.name }) throw CategoryException("This name already use")
+        if (existCategories.any { it.name == categoryDraft.name }) throw CategoryException("category.name.exist")
 
         return categoryRepository.createCategory(userId, categoryDraft)
     }

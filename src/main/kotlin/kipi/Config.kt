@@ -12,7 +12,7 @@ class Config {
     private fun get(name: String): String =
         properties.getProperty(name) ?: throw RuntimeException("This property not exist")
 
-    private fun getEnv(name: String): String = envs[name] ?: throw RuntimeException("This env not exist")
+    private fun getEnv(name: String): String = envs[name] ?: throw RuntimeException("Еnv $name not exist")
 
     val dbHost = getEnv("DB_HOST")
     val dbPort = getEnv("DB_PORT").toInt()

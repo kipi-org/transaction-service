@@ -17,8 +17,8 @@ class LimitService(
         val existCategories = categoryService.findCategories(userId)
         val limits = limitRepository.findLimits(existCategories.map { it.id })
 
-        if (existCategories.none { it.id == limitDraft.categoryId }) throw CategoryException("This category not exist")
-        if (limits.any { it.category.id == limitDraft.categoryId }) throw LimitCreateException("Limit with this category already exist")
+        if (existCategories.none { it.id == limitDraft.categoryId }) throw CategoryException("category.not.exist")
+        if (limits.any { it.category.id == limitDraft.categoryId }) throw LimitCreateException("limit.with.category.exist")
 
         val draft = if (limitDraft.currentAmount == ZERO) limitDraft.copy(
             currentAmount = transactionService.getTransactions(accountIds!!)

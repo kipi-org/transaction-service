@@ -15,7 +15,7 @@ class TransactionService(
 ) {
     fun createTransaction(userId: Long, accountId: Long, transactionDraft: TransactionDraft): Long {
         val categories = categoryService.findCategories(userId)
-        if (categories.none { it.id == transactionDraft.categoryId }) throw CategoryException("This category not exist")
+        if (categories.none { it.id == transactionDraft.categoryId }) throw CategoryException("category.not.exist")
 
         return transactionRepository.createTransaction(accountId, transactionDraft)
     }
