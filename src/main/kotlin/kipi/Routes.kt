@@ -79,10 +79,19 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                 }
             }
 
-            delete("/transaction/{transactionId}") {
-                transactionDeleteController.handle(call.userId, call.transactionId)
+            route("/transaction/{transactionId}") {
+                delete {
+                    transactionDeleteController.handle(call.userId, call.transactionId)
 
-                call.respond(OK)
+                    call.respond(OK)
+                }
+
+                get {
+                    call.respond(
+                        OK,
+                        oneTransactionFindController.handle(call.userId, call.transactionId)
+                    )
+                }
             }
 
             route("/account/{accountId}") {

@@ -2,6 +2,7 @@ package kipi
 
 import io.ktor.http.ContentType.Application.Json
 import io.ktor.http.HttpStatusCode.Companion.Forbidden
+import io.ktor.http.HttpStatusCode.Companion.NotFound
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -15,6 +16,7 @@ import kipi.dto.ErrorResponse
 import kipi.exceptions.CategoryException
 import kipi.exceptions.GoalCreateException
 import kipi.exceptions.LimitCreateException
+import kipi.exceptions.TransactionNotExistException
 import kipi.mappers.JsonMapper.mapper
 import org.jetbrains.exposed.sql.Database
 
@@ -39,6 +41,10 @@ fun Application.init() {
 
         exception<GoalCreateException> { call, cause ->
             call.respond(Forbidden, ErrorResponse(cause.message))
+        }
+
+        exception<TransactionNotExistException> { call, cause ->
+            call.respond(NotFound, ErrorResponse(cause.message))
         }
     }
 

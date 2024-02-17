@@ -110,4 +110,6 @@ class TransactionService(
     }
 
     fun deleteTransaction(id: Long) = transactionRepository.deleteTransaction(id)
+
+    fun findTransaction(id: Long) = transactionRepository.findTransaction(id)
 }

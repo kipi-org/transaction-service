@@ -46,6 +46,12 @@ class TransactionRepository {
             .map { mapToTransaction(it) }
     }
 
+    fun findTransaction(id: Long): Transaction? = transaction {
+        (Transactions innerJoin TransactionTypes innerJoin Categories).select {
+            Transactions.id eq id
+        }.map { mapToTransaction(it) }.firstOrNull()
+    }
+
     fun deleteTransaction(id: Long) = transaction {
         Transactions.deleteWhere { Transactions.id eq id }
     }
