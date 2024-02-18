@@ -24,179 +24,179 @@
   "categories": [
     {
       "name": "Переводы",
-      "imageName": "20"
+      "iconUrl": "20"
     },
     {
       "name": "Бонусы",
-      "imageName": "19"
+      "iconUrl": "19"
     },
     {
       "name": "Супермаркеты",
-      "imageName": "53"
+      "iconUrl": "53"
     },
     {
       "name": "Сервис",
-      "imageName": "1"
+      "iconUrl": "1"
     },
     {
       "name": "Развлечения",
-      "imageName": "8"
+      "iconUrl": "8"
     },
     {
       "name": "Фастфуд",
-      "imageName": "3"
+      "iconUrl": "3"
     },
     {
       "name": "Рестораны",
-      "imageName": "51"
+      "iconUrl": "51"
     },
     {
       "name": "Аптеки",
-      "imageName": "39"
+      "iconUrl": "39"
     },
     {
       "name": "Мобильная связь",
-      "imageName": "38"
+      "iconUrl": "38"
     },
     {
       "name": "Связь",
-      "imageName": "40"
+      "iconUrl": "40"
     },
     {
       "name": "Пополнения",
-      "imageName": "18"
+      "iconUrl": "18"
     },
     {
       "name": "Такси",
-      "imageName": "50"
+      "iconUrl": "50"
     },
     {
       "name": "Медицина",
-      "imageName": "29"
+      "iconUrl": "29"
     },
     {
       "name": "Местный транспорт",
-      "imageName": "52"
+      "iconUrl": "52"
     },
     {
       "name": "Канцтовары",
-      "imageName": "30"
+      "iconUrl": "30"
     },
     {
       "name": "Транспорт",
-      "imageName": "52"
+      "iconUrl": "52"
     },
     {
       "name": "Другое",
-      "imageName": "32"
+      "iconUrl": "32"
     },
     {
       "name": "Книги",
-      "imageName": "24"
+      "iconUrl": "24"
     },
     {
       "name": "Цифровые товары",
-      "imageName": "27"
+      "iconUrl": "27"
     },
     {
       "name": "Кино",
-      "imageName": "35"
+      "iconUrl": "35"
     },
     {
       "name": "Электроника и техника",
-      "imageName": "27"
+      "iconUrl": "27"
     },
     {
       "name": "Спорттовары",
-      "imageName": "54"
+      "iconUrl": "54"
     },
     {
       "name": "Отели",
-      "imageName": "46"
+      "iconUrl": "46"
     },
     {
       "name": "Косметика",
-      "imageName": "34"
+      "iconUrl": "34"
     },
     {
       "name": "Дом и ремонт",
-      "imageName": "47"
+      "iconUrl": "47"
     },
     {
       "name": "Красота",
-      "imageName": "23"
+      "iconUrl": "23"
     },
     {
       "name": "Одежда и обувь",
-      "imageName": "49"
+      "iconUrl": "49"
     },
     {
       "name": "Авиабилеты",
-      "imageName": "44"
+      "iconUrl": "44"
     },
     {
       "name": "Образование",
-      "imageName": "43"
+      "iconUrl": "43"
     },
     {
       "name": "Турагентства",
-      "imageName": "42"
+      "iconUrl": "42"
     },
     {
       "name": "Цветы",
-      "imageName": "16"
+      "iconUrl": "16"
     },
     {
       "name": "Услуги банка",
-      "imageName": "9"
+      "iconUrl": "9"
     },
     {
       "name": "Онлайн-кинотеатры",
-      "imageName": "2"
+      "iconUrl": "2"
     },
     {
       "name": "Ж/д билеты",
-      "imageName": "11"
+      "iconUrl": "11"
     },
     {
       "name": "Платные дороги",
-      "imageName": "4"
+      "iconUrl": "4"
     },
     {
       "name": "Финансы",
-      "imageName": "21"
+      "iconUrl": "21"
     },
     {
       "name": "Фото и видео",
-      "imageName": "28"
+      "iconUrl": "28"
     },
     {
       "name": "Сувениры",
-      "imageName": "41"
+      "iconUrl": "41"
     },
     {
       "name": "Госуслуги",
-      "imageName": "10"
+      "iconUrl": "10"
     },
     {
       "name": "ЖКХ",
-      "imageName": "31"
+      "iconUrl": "31"
     },
     {
       "name": "Наличные",
-      "imageName": "21"
+      "iconUrl": "21"
     },
     {
       "name": "Топливо",
-      "imageName": "48"
+      "iconUrl": "48"
     },
     {
       "name": "Эл. кошельки и переводы",
-      "imageName": "20"
+      "iconUrl": "20"
     },
     {
       "name": "Телевидение",
-      "imageName": "27"
+      "iconUrl": "27"
     }
   ]
 }
