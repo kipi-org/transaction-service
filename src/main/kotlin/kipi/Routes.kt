@@ -99,6 +99,12 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                         oneTransactionFindController.handle(call.userId, call.transactionId)
                     )
                 }
+
+                put<TransactionUpdates> {
+                    transactionUpdateController.handle(call.userId, call.transactionId, it)
+
+                    call.respond(OK)
+                }
             }
 
             route("/account/{accountId}") {

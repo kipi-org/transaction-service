@@ -20,6 +20,9 @@ class CategoryService(
 
     fun findCategories(userId: Long): List<Category> = categoryRepository.findUserCategories(userId)
 
+    fun findCategory(userId: Long, categoryId: Long): Category? =
+        categoryRepository.findUserCategory(userId, categoryId)
+
     fun deleteCategory(userId: Long, categoryId: Long) = categoryRepository.deleteCategory(userId, categoryId)
 
     fun createBaseCategories(userId: Long) {

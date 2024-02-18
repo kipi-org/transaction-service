@@ -29,6 +29,12 @@ class CategoryRepository {
         }.map { mapToCategory(it) }
     }
 
+    fun findUserCategory(userId: Long, categoryId: Long) = transaction {
+        Categories.select {
+            (Categories.id eq categoryId) and (Categories.userId eq userId)
+        }.map { mapToCategory(it) }.firstOrNull()
+    }
+
     fun deleteCategory(userId: Long, categoryId: Long) = transaction {
         Categories.deleteWhere {
             (id eq categoryId) and (Categories.userId eq userId)

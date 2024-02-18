@@ -112,4 +112,7 @@ class TransactionService(
     fun deleteTransaction(id: Long) = transactionRepository.deleteTransaction(id)
 
     fun findTransaction(id: Long) = transactionRepository.findTransaction(id)
+
+    fun updateTransaction(transactionId: Long, updates: TransactionUpdates) =
+        transactionRepository.updateTransaction(transactionId, updates)
 }

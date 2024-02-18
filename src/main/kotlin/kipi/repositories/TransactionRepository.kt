@@ -3,10 +3,8 @@ package kipi.repositories
 import kipi.dao.Categories
 import kipi.dao.TransactionTypes
 import kipi.dao.Transactions
-import kipi.dto.Category
+import kipi.dto.*
 import kipi.dto.Transaction
-import kipi.dto.TransactionDraft
-import kipi.dto.TransactionType
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -26,6 +24,13 @@ class TransactionRepository {
             it[date] = transactionDraft.date ?: now()
             it[description] = transactionDraft.description
         }[Transactions.id]
+    }
+
+    fun updateTransaction(transactionId: Long, updates: TransactionUpdates) = transaction {
+        Transactions.update({ Transactions.id eq transactionId }) {
+            updates.categoryId?.let { id -> it[categoryId] = id }
+            updates.description?.let { desc -> it[description] = desc }
+        }
     }
 
     fun findTransactions(
