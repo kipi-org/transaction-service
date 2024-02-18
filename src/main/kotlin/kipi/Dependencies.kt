@@ -14,7 +14,7 @@ class Dependencies {
     private val categoryRepository = CategoryRepository()
     private val limitRepository = LimitRepository()
     private val goalRepository = GoalRepository()
-    private val categoryService = CategoryService(categoryRepository)
+    private val categoryService = CategoryService(categoryRepository, config)
     private val transactionService = TransactionService(transactionRepository, categoryService)
     private val limitService = LimitService(limitRepository, categoryService, transactionService)
     private val goalService = GoalService(goalRepository, categoryService, transactionService)
@@ -34,4 +34,5 @@ class Dependencies {
     val oneTransactionFindController = OneTransactionFindController(transactionService)
     val gapFetchController = GapFetchController(transactionService)
     val categoriesStatisticsController = CategoriesStatisticsController(statisticsService)
+    val createBaseCategoriesController = CreateBaseCategoriesController(categoryService)
 }

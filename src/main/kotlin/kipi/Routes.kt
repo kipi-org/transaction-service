@@ -45,8 +45,15 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                 call.respond(OK)
             }
 
-            get("/categories") {
-                call.respond(OK, categoriesFindController.handle(call.userId))
+            route("/categories") {
+                get {
+                    call.respond(OK, categoriesFindController.handle(call.userId))
+                }
+
+                post("/base") {
+                    createBaseCategoriesController.handle(call.userId)
+                    call.respond(OK)
+                }
             }
 
             get("/limits") {

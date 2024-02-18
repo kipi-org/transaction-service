@@ -1,0 +1,202 @@
+{
+  "colors": [
+    "#D4A373",
+    "#CCDA87",
+    "#A2D2FF",
+    "#D0B8AC",
+    "#FF92B1",
+    "#ABE6EA",
+    "#EFD780",
+    "#FFAFCC",
+    "#F4978E",
+    "#ACCFA0",
+    "#CCACFF",
+    "#FFCC84",
+    "#9DE9BC",
+    "#FF828F",
+    "#A5ADFF",
+    "#E1B0DF",
+    "#A8E4A7",
+    "#CDB4DB",
+    "#EDBF9E",
+    "#B8B8FF"
+  ],
+  "categories": [
+    {
+      "name": "Переводы",
+      "imageName": "20"
+    },
+    {
+      "name": "Бонусы",
+      "imageName": "19"
+    },
+    {
+      "name": "Супермаркеты",
+      "imageName": "53"
+    },
+    {
+      "name": "Сервис",
+      "imageName": "1"
+    },
+    {
+      "name": "Развлечения",
+      "imageName": "8"
+    },
+    {
+      "name": "Фастфуд",
+      "imageName": "3"
+    },
+    {
+      "name": "Рестораны",
+      "imageName": "51"
+    },
+    {
+      "name": "Аптеки",
+      "imageName": "39"
+    },
+    {
+      "name": "Мобильная связь",
+      "imageName": "38"
+    },
+    {
+      "name": "Связь",
+      "imageName": "40"
+    },
+    {
+      "name": "Пополнения",
+      "imageName": "18"
+    },
+    {
+      "name": "Такси",
+      "imageName": "50"
+    },
+    {
+      "name": "Медицина",
+      "imageName": "29"
+    },
+    {
+      "name": "Местный транспорт",
+      "imageName": "52"
+    },
+    {
+      "name": "Канцтовары",
+      "imageName": "30"
+    },
+    {
+      "name": "Транспорт",
+      "imageName": "52"
+    },
+    {
+      "name": "Другое",
+      "imageName": "32"
+    },
+    {
+      "name": "Книги",
+      "imageName": "24"
+    },
+    {
+      "name": "Цифровые товары",
+      "imageName": "27"
+    },
+    {
+      "name": "Кино",
+      "imageName": "35"
+    },
+    {
+      "name": "Электроника и техника",
+      "imageName": "27"
+    },
+    {
+      "name": "Спорттовары",
+      "imageName": "54"
+    },
+    {
+      "name": "Отели",
+      "imageName": "46"
+    },
+    {
+      "name": "Косметика",
+      "imageName": "34"
+    },
+    {
+      "name": "Дом и ремонт",
+      "imageName": "47"
+    },
+    {
+      "name": "Красота",
+      "imageName": "23"
+    },
+    {
+      "name": "Одежда и обувь",
+      "imageName": "49"
+    },
+    {
+      "name": "Авиабилеты",
+      "imageName": "44"
+    },
+    {
+      "name": "Образование",
+      "imageName": "43"
+    },
+    {
+      "name": "Турагентства",
+      "imageName": "42"
+    },
+    {
+      "name": "Цветы",
+      "imageName": "16"
+    },
+    {
+      "name": "Услуги банка",
+      "imageName": "9"
+    },
+    {
+      "name": "Онлайн-кинотеатры",
+      "imageName": "2"
+    },
+    {
+      "name": "Ж/д билеты",
+      "imageName": "11"
+    },
+    {
+      "name": "Платные дороги",
+      "imageName": "4"
+    },
+    {
+      "name": "Финансы",
+      "imageName": "21"
+    },
+    {
+      "name": "Фото и видео",
+      "imageName": "28"
+    },
+    {
+      "name": "Сувениры",
+      "imageName": "41"
+    },
+    {
+      "name": "Госуслуги",
+      "imageName": "10"
+    },
+    {
+      "name": "ЖКХ",
+      "imageName": "31"
+    },
+    {
+      "name": "Наличные",
+      "imageName": "21"
+    },
+    {
+      "name": "Топливо",
+      "imageName": "48"
+    },
+    {
+      "name": "Эл. кошельки и переводы",
+      "imageName": "20"
+    },
+    {
+      "name": "Телевидение",
+      "imageName": "27"
+    }
+  ]
+}

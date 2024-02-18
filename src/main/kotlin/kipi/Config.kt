@@ -1,8 +1,12 @@
 package kipi
 
+import com.google.gson.Gson
+import kipi.dto.DefaultCategoriesOptions
 import java.util.*
 
 class Config {
+    private val gson = Gson()
+
     private val properties = Config::class.java.classLoader.getResourceAsStream("config.properties").use {
         Properties().apply { load(it) }
     }
@@ -19,4 +23,8 @@ class Config {
     val dbName = getEnv("DB_NAME")
     val dbUser = getEnv("DB_USER")
     val dbPassword = getEnv("DB_PASSWORD")
+
+    val defaultCategories = Config::class.java.classLoader.getResourceAsStream("default-categories.json").let {
+        gson.fromJson(it.reader(), DefaultCategoriesOptions::class.java)
+    }
 }
