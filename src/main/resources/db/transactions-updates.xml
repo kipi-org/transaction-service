@@ -34,4 +34,11 @@
         <sqlFile path="./scripts/transaction-triggers.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet author="masadf" id="202402182239">
+        <addColumn tableName="transactions">
+            <column name="foreignId"
+                    type="varchar"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

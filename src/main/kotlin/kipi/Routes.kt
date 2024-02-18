@@ -6,6 +6,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import kipi.dto.*
+import kipi.dto.tinkoff.TinkoffXmlRequest
 import java.time.LocalDateTime
 
 fun Application.routes(deps: Dependencies) = with(deps) {
@@ -76,6 +77,11 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                             call.pageSize
                         )
                     )
+                }
+
+                post<TinkoffXmlRequest>("/tinkoff") {
+                    tinkoffTransactionsParseController.handle(call.userId, it)
+                    call.respond(OK)
                 }
 
                 get("/gaps/{gapType}") {

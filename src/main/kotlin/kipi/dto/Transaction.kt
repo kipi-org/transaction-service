@@ -11,5 +11,6 @@ data class Transaction(
     val amount: BigDecimal,
     val date: LocalDateTime,
     val category: Category,
-    val description: String?
+    val description: String?,
+    val foreignId: String?
 ) : Serializable

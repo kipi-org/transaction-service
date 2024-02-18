@@ -11,5 +11,6 @@ object Transactions : Table("transactions") {
     val amount = decimal("amount", 18, 2)
     val date = datetime("date")
     val description = varchar("description", 255).nullable()
+    val foreignId = varchar("foreignId", 255).nullable()
     override val primaryKey = PrimaryKey(id)
 }

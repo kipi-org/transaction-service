@@ -23,7 +23,22 @@ class TransactionRepository {
             it[amount] = transactionDraft.amount
             it[date] = transactionDraft.date ?: now()
             it[description] = transactionDraft.description
+            it[foreignId] = transactionDraft.foreignId
         }[Transactions.id]
+    }
+
+    fun createManyTransactions(accountId: Long, transactionDrafts: List<TransactionDraft>) = transaction {
+        Transactions.batchInsert(transactionDrafts) { transactionDraft ->
+            this[Transactions.accountId] = accountId
+            this[Transactions.txTypeId] =
+                TransactionTypes.select { TransactionTypes.name eq transactionDraft.type.toString() }
+                    .map { row -> row[TransactionTypes.id] }.first()
+            this[Transactions.categoryId] = transactionDraft.categoryId
+            this[Transactions.amount] = transactionDraft.amount
+            this[Transactions.date] = transactionDraft.date ?: now()
+            this[Transactions.description] = transactionDraft.description
+            this[Transactions.foreignId] = transactionDraft.foreignId
+        }
     }
 
     fun updateTransaction(transactionId: Long, updates: TransactionUpdates) = transaction {
@@ -75,6 +90,7 @@ class TransactionRepository {
                 iconUrl = resultRow[Categories.iconUrl],
                 colorCode = resultRow[Categories.colorCode]
             ),
-            description = resultRow[Transactions.description]
+            description = resultRow[Transactions.description],
+            foreignId = resultRow[Transactions.foreignId]
         )
 }

@@ -20,6 +20,18 @@ class TransactionService(
         return transactionRepository.createTransaction(accountId, transactionDraft)
     }
 
+    fun createManyTransactionsWithForeignId(accountId: Long, transactionDrafts: List<TransactionDraft>) {
+        val transactionsForeignIds =
+            transactionRepository.findTransactions(listOf(accountId)).mapNotNull { it.foreignId }
+        val transactionsForSave = transactionDrafts.filterNot { it.foreignId in transactionsForeignIds }
+
+        if (transactionsForSave.isEmpty()) return
+
+        transactionsForSave.chunked(500).forEach {
+            transactionRepository.createManyTransactions(accountId, it)
+        }
+    }
+
     fun getTransactions(
         accountIds: List<Long>,
         from: LocalDateTime? = null,
