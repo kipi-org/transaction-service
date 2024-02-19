@@ -6,5 +6,5 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 @JacksonXmlRootElement(localName = "BANKMSGSRSV1")
 data class TinkoffBankMessageWrapper(
     @JacksonXmlProperty(localName = "STMTTRNRS")
-    val tinkoffBankMessage: TinkoffBankMessage
+    val tinkoffBankMessage: TinkoffBankMessage?
 )

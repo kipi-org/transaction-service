@@ -13,10 +13,7 @@ import io.ktor.server.response.*
 import kipi.db.DataSourceConfigurator
 import kipi.db.DbMigration
 import kipi.dto.ErrorResponse
-import kipi.exceptions.CategoryException
-import kipi.exceptions.GoalCreateException
-import kipi.exceptions.LimitCreateException
-import kipi.exceptions.TransactionNotExistException
+import kipi.exceptions.*
 import kipi.mappers.JsonMapper.mapper
 import org.jetbrains.exposed.sql.Database
 
@@ -40,6 +37,10 @@ fun Application.init() {
         }
 
         exception<GoalCreateException> { call, cause ->
+            call.respond(Forbidden, ErrorResponse(cause.message))
+        }
+
+        exception<InvalidTinkoffDataException> { call, cause ->
             call.respond(Forbidden, ErrorResponse(cause.message))
         }
 

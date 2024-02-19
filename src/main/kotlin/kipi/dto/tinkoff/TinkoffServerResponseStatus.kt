@@ -6,7 +6,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 @JacksonXmlRootElement(localName = "STATUS")
 data class TinkoffServerResponseStatus(
     @JacksonXmlProperty(localName = "CODE")
-    val code: String,
+    val code: String?,
     @JacksonXmlProperty(localName = "SEVERITY")
-    val severity: String
+    val severity: String?
 )

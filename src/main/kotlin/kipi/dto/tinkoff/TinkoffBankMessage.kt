@@ -6,9 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 @JacksonXmlRootElement(localName = "STMTTRNRS")
 data class TinkoffBankMessage(
     @JacksonXmlProperty(localName = "TRNUID")
-    val trnuId: String,
+    val trnuId: String?,
     @JacksonXmlProperty(localName = "STATUS")
-    val tinkoffServerResponseStatus: TinkoffServerResponseStatus,
+    val tinkoffServerResponseStatus: TinkoffServerResponseStatus?,
     @JacksonXmlProperty(localName = "STMTRS")
-    val tinkoffTransactionsWithAccount: TinkoffTransactionsWithAccount
+    val tinkoffTransactionsWithAccount: TinkoffTransactionsWithAccount?
 )

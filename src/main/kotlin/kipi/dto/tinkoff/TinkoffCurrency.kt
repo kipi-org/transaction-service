@@ -6,7 +6,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 @JacksonXmlRootElement(localName = "CURRENCY")
 data class TinkoffCurrency(
     @JacksonXmlProperty(localName = "CURSYM")
-    val value: String,
+    val value: String?,
     @JacksonXmlProperty(localName = "CURRATE")
-    val currate: String
+    val currate: String?
 )

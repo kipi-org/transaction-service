@@ -6,9 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 @JacksonXmlRootElement(localName = "BANKACCTFROM")
 data class TinkoffAboutAccount(
     @JacksonXmlProperty(localName = "BANKID")
-    val bankId: String,
+    val bankId: String?,
     @JacksonXmlProperty(localName = "ACCTID")
-    val accountId: String,
+    val accountId: String?,
     @JacksonXmlProperty(localName = "ACCTTYPE")
-    val accountType: String
+    val accountType: String?
 )

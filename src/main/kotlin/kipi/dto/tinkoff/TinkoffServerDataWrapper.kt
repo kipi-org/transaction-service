@@ -6,5 +6,5 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 @JacksonXmlRootElement(localName = "SIGNONMSGSRSV1")
 data class TinkoffServerDataWrapper(
     @JacksonXmlProperty(localName = "SONRS")
-    val tinkoffServerData: TinkoffServerData
+    val tinkoffServerData: TinkoffServerData?
 )

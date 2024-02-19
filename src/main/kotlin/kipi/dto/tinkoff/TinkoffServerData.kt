@@ -6,9 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 @JacksonXmlRootElement(localName = "SONRS")
 data class TinkoffServerData(
     @JacksonXmlProperty(localName = "STATUS")
-    val status: TinkoffServerResponseStatus,
+    val status: TinkoffServerResponseStatus?,
     @JacksonXmlProperty(localName = "DTSERVER")
-    var dtServer: String,
+    var dtServer: String?,
     @JacksonXmlProperty(localName = "LANGUAGE")
-    val language: String
+    val language: String?
 )

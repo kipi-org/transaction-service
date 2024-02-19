@@ -6,9 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 @JacksonXmlRootElement(localName = "STMTRS")
 data class TinkoffTransactionsWithAccount(
     @JacksonXmlProperty(localName = "CURDEF")
-    val currency: String,
+    val currency: String?,
     @JacksonXmlProperty(localName = "BANKACCTFROM")
-    val tinkoffAboutAccount: TinkoffAboutAccount,
+    val tinkoffAboutAccount: TinkoffAboutAccount?,
     @JacksonXmlProperty(localName = "BANKTRANLIST")
-    val tinkoffTransactionsPack: TinkoffTransactionsPack
+    val tinkoffTransactionsPack: TinkoffTransactionsPack?
 )

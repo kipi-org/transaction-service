@@ -14,5 +14,5 @@ data class TinkoffTransactionsPack(
     @JacksonXmlProperty(localName = "STMTTRN")
     @JacksonXmlCData
     @JacksonXmlElementWrapper(localName = "STMTTRN", useWrapping = false)
-    val tinkoffTransactions: List<TinkoffTransaction>
+    val tinkoffTransactions: List<TinkoffTransaction> = emptyList()
 )
