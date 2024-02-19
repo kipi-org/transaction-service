@@ -34,7 +34,7 @@ class TinkoffTransactionsParseService(
                 foreignId = it.id,
                 amount = it.amount.toBigDecimal(),
                 description = it.name,
-                categoryId = categories.find { category -> category.name.lowercase() == it.memo }?.id
+                categoryId = categories.find { category -> category.name.lowercase() == it.memo?.lowercase() }?.id
                     ?: categories.find { category -> category.name == DEFAULT_CATEGORY_NAME }!!.id,
                 date = parseTinkoffDate(it.date)
             )
