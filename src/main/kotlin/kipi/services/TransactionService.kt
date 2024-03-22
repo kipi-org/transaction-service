@@ -37,8 +37,9 @@ class TransactionService(
         from: LocalDateTime? = null,
         to: LocalDateTime? = null,
         page: Int = 0,
-        pageSize: Int = 15
-    ) = transactionRepository.findTransactions(accountIds, from, to, page, pageSize)
+        pageSize: Int = 15,
+        categoryId: Long? = null
+    ) = transactionRepository.findTransactions(accountIds, from, to, page, pageSize, categoryId)
 
     fun getTransactionsGaps(
         accountIds: List<Long>,

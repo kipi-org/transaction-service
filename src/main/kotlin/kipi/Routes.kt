@@ -27,7 +27,7 @@ fun Application.routes(deps: Dependencies) = with(deps) {
             }
 
             delete("/category/{categoryId}") {
-                categoryDeleteController.handle(call.userId, call.categoryId)
+                categoryDeleteController.handle(call.userId, call.categoryId!!)
 
                 call.respond(OK)
             }
@@ -77,6 +77,7 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                         OK,
                         transactionFetchController.handle(
                             call.accountsIds,
+                            call.categoryId,
                             call.from,
                             call.to,
                             call.page,
@@ -141,8 +142,8 @@ private val ApplicationCall.userId: Long
 private val ApplicationCall.accountId: Long
     get() = this.parameters.getOrFail("accountId").toLong()
 
-private val ApplicationCall.categoryId: Long
-    get() = this.parameters.getOrFail("categoryId").toLong()
+private val ApplicationCall.categoryId: Long?
+    get() = this.parameters["categoryId"]?.toLong()
 
 private val ApplicationCall.limitId: Long
     get() = this.parameters.getOrFail("limitId").toLong()

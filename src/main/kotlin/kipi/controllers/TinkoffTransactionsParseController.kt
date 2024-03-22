@@ -10,7 +10,7 @@ class TinkoffTransactionsParseController(
 ) {
     fun handle(userId: Long, tinkoffXmlRequest: TinkoffXmlRequest) {
         val transactionDrafts = tinkoffTransactionsParseService.parseTransactions(userId, tinkoffXmlRequest)
-
+        if (transactionDrafts.isEmpty()) return
         transactionService.createManyTransactionsWithForeignId(tinkoffXmlRequest.accountId, transactionDrafts)
     }
 }

@@ -22,8 +22,9 @@ class TinkoffTransactionsParseService(
         userId: Long,
         tinkoffStatement: TinkoffStatement
     ): List<TransactionDraft> {
+        tinkoffStatement.tinkoffBankMessageWrapper ?: return emptyList()
         val tinkoffTransactionsWithAccount =
-            tinkoffStatement.tinkoffBankMessageWrapper?.tinkoffBankMessage?.tinkoffTransactionsWithAccount
+            tinkoffStatement.tinkoffBankMessageWrapper.tinkoffBankMessage?.tinkoffTransactionsWithAccount
                 ?: throw InvalidTinkoffDataException("transaction.tinkoff.invalid")
         val categories = categoryService.findCategories(userId)
         val transactionsPack = tinkoffTransactionsWithAccount.tinkoffTransactionsPack?.tinkoffTransactions

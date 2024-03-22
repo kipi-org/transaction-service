@@ -55,14 +55,16 @@ class TransactionRepository {
         from: LocalDateTime? = null,
         to: LocalDateTime? = null,
         page: Int? = null,
-        pageSize: Int? = null
-    ): List<Transaction> = transaction {
+        pageSize: Int? = null,
+        categoryId: Long? = null
+        ): List<Transaction> = transaction {
         (Transactions innerJoin TransactionTypes innerJoin Categories).select {
             val isInList = accountId inList accountIds
             val isFrom = if (from != null) (Transactions.date greaterEq from) else Op.TRUE
             val isTo = if (to != null) (Transactions.date lessEq to) else Op.TRUE
+            val categoryIdCheck = if (categoryId != null) (Transactions.categoryId eq categoryId) else Op.TRUE
 
-            isInList and isFrom and isTo
+            isInList and isFrom and isTo and categoryIdCheck
         }.orderBy(Transactions.date to SortOrder.DESC)
             .apply { if (page != null && pageSize != null) this.limit(pageSize, page.toLong() * pageSize.toLong()) }
             .map { mapToTransaction(it) }
