@@ -11,5 +11,6 @@ class GapFetchController(
         gapType: GapType,
         page: Int = 0,
         pageSize: Int = 15,
-    ) = transactionService.getTransactionsGaps(accountIds, gapType, page, pageSize)
+        categoryId: Long? = null
+    ) = transactionService.getTransactionsGaps(accountIds, gapType, page, pageSize, categoryId)
 }

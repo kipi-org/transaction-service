@@ -94,7 +94,7 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                 get("/gaps/{gapType}") {
                     call.respond(
                         OK,
-                        gapFetchController.handle(call.accountsIds, call.gapType, call.page, call.pageSize)
+                        gapFetchController.handle(call.accountsIds, call.gapType, call.page, call.pageSize, call.categoryId)
                     )
                 }
             }

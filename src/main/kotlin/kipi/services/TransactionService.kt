@@ -46,6 +46,7 @@ class TransactionService(
         gapType: GapType,
         page: Int = 0,
         pageSize: Int = 15,
+        categoryId: Long? = null
     ): List<TransactionGap> {
         val skip = page.toLong() * pageSize.toLong()
         var currentDay = now().atStartOfDay()
@@ -108,7 +109,8 @@ class TransactionService(
         }
 
         return periods.map {
-            val transactions = transactionRepository.findTransactions(accountIds, it.from, it.to)
+            val transactions =
+                transactionRepository.findTransactions(accountIds, it.from, it.to, categoryId = categoryId)
             val income =
                 transactions.filter { tx -> tx.amount >= ZERO }.map { tx -> tx.amount }.reduceOrNull { am1, am2 ->
                     am1 + am2
@@ -124,7 +126,8 @@ class TransactionService(
 
     fun deleteTransaction(id: Long) = transactionRepository.deleteTransaction(id)
 
-    fun deleteTransactions(accountsIds: List<Long>) = transactionRepository.deleteTransactionsWithAccountsIds(accountsIds)
+    fun deleteTransactions(accountsIds: List<Long>) =
+        transactionRepository.deleteTransactionsWithAccountsIds(accountsIds)
 
     fun findTransaction(id: Long) = transactionRepository.findTransaction(id)
 
