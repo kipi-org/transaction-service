@@ -41,6 +41,12 @@ class CategoryRepository {
         }
     }
 
+    fun deleteUserCategories(userId: Long) = transaction {
+        Categories.deleteWhere {
+            Categories.userId eq userId
+        }
+    }
+
     private fun mapToCategory(resultRow: ResultRow) = Category(
         id = resultRow[id],
         userId = resultRow[userId],

@@ -11,6 +11,7 @@ import kipi.dto.Goal
 import kipi.dto.GoalDraft
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -34,6 +35,12 @@ class GoalRepository {
     fun deleteGoal(goalId: Long) = transaction {
         Goals.deleteWhere {
             id eq goalId
+        }
+    }
+
+    fun deleteGoals(goalsIds: List<Long>) = transaction {
+        Goals.deleteWhere {
+            id inList goalsIds
         }
     }
 

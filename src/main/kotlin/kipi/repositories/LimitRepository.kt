@@ -11,6 +11,7 @@ import kipi.dto.Limit
 import kipi.dto.LimitDraft
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -35,6 +36,12 @@ class LimitRepository {
     fun deleteLimit(limitId: Long) = transaction {
         Limits.deleteWhere {
             id eq limitId
+        }
+    }
+
+    fun deleteLimits(limitsIds: List<Long>) = transaction {
+        Limits.deleteWhere {
+            id inList limitsIds
         }
     }
 

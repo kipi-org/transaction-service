@@ -36,9 +36,17 @@ class GoalService(
 
     fun deleteGoal(userId: Long, goalId: Long) {
         val categories = categoryService.findCategories(userId)
-        val limits = goalRepository.findGoals(categories.map { it.id })
-        if (limits.none { it.id == goalId }) return
+        val goals = goalRepository.findGoals(categories.map { it.id })
+        if (goals.none { it.id == goalId }) return
 
         goalRepository.deleteGoal(goalId)
+    }
+
+    fun deleteAllGoals(userId: Long) {
+        val categories = categoryService.findCategories(userId)
+        val goalsIds = goalRepository.findGoals(categories.map { it.id }).map { it.id }
+        if (goalsIds.isEmpty()) return
+
+        goalRepository.deleteGoals(goalsIds)
     }
 }

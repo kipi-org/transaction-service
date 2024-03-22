@@ -25,6 +25,8 @@ class CategoryService(
 
     fun deleteCategory(userId: Long, categoryId: Long) = categoryRepository.deleteCategory(userId, categoryId)
 
+    fun deleteAllCategories(userId: Long) = categoryRepository.deleteUserCategories(userId)
+
     fun createBaseCategories(userId: Long) {
         val defaultCategories = config.defaultCategories
 

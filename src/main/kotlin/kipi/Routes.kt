@@ -20,6 +20,12 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                 call.respond(OK, categoryCreateController.handle(call.userId, it))
             }
 
+            delete {
+                deleteUserInfoController.handle(call.userId, call.accountsIds)
+
+                call.respond(OK)
+            }
+
             delete("/category/{categoryId}") {
                 categoryDeleteController.handle(call.userId, call.categoryId)
 

@@ -41,4 +41,12 @@ class LimitService(
 
         limitRepository.deleteLimit(limitId)
     }
+
+    fun deleteAllLimits(userId: Long) {
+        val categories = categoryService.findCategories(userId)
+        val limitsIds = limitRepository.findLimits(categories.map { it.id }).map { it.id }
+        if (limitsIds.isEmpty()) return
+
+        limitRepository.deleteLimits(limitsIds)
+    }
 }

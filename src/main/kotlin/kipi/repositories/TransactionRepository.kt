@@ -3,10 +3,12 @@ package kipi.repositories
 import kipi.dao.Categories
 import kipi.dao.TransactionTypes
 import kipi.dao.Transactions
+import kipi.dao.Transactions.accountId
 import kipi.dto.*
 import kipi.dto.Transaction
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
@@ -56,7 +58,7 @@ class TransactionRepository {
         pageSize: Int? = null
     ): List<Transaction> = transaction {
         (Transactions innerJoin TransactionTypes innerJoin Categories).select {
-            val isInList = Transactions.accountId inList accountIds
+            val isInList = accountId inList accountIds
             val isFrom = if (from != null) (Transactions.date greaterEq from) else Op.TRUE
             val isTo = if (to != null) (Transactions.date lessEq to) else Op.TRUE
 
@@ -76,10 +78,14 @@ class TransactionRepository {
         Transactions.deleteWhere { Transactions.id eq id }
     }
 
+    fun deleteTransactionsWithAccountsIds(accountsIds: List<Long>) = transaction {
+        Transactions.deleteWhere { accountId inList accountsIds }
+    }
+
     private fun mapToTransaction(resultRow: ResultRow): Transaction =
         Transaction(
             id = resultRow[Transactions.id],
-            accountId = resultRow[Transactions.accountId],
+            accountId = resultRow[accountId],
             type = TransactionType.valueOf(resultRow[TransactionTypes.name]),
             amount = resultRow[Transactions.amount],
             date = resultRow[Transactions.date],
