@@ -32,14 +32,24 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                 call.respond(OK)
             }
 
-            post<LimitDraft>("/limit") {
-                call.respond(OK, limitCreateController.handle(call.userId, it, call.accountsIds))
-            }
+            route("/limit") {
+                post<LimitDraft> {
+                    call.respond(OK, limitCreateController.handle(call.userId, it, call.accountsIds))
+                }
 
-            delete("/limit/{limitId}") {
-                limitDeleteController.handle(call.userId, call.limitId)
+                route("/{limitId}") {
+                    delete {
+                        limitDeleteController.handle(call.userId, call.limitId)
 
-                call.respond(OK)
+                        call.respond(OK)
+                    }
+
+                    put<LimitUpdates> {
+                        updateLimitController.handle(call.userId, call.limitId, it)
+
+                        call.respond(OK)
+                    }
+                }
             }
 
             post<GoalDraft>("/goal") {

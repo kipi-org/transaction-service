@@ -9,12 +9,10 @@ import kipi.dao.Limits.id
 import kipi.dto.Category
 import kipi.dto.Limit
 import kipi.dto.LimitDraft
-import org.jetbrains.exposed.sql.ResultRow
+import kipi.dto.LimitUpdates
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class LimitRepository {
@@ -31,6 +29,12 @@ class LimitRepository {
         (Limits innerJoin Categories).select {
             categoryId inList categoriesIds
         }.map { mapToLimit(it) }
+    }
+
+    fun updateLimits(limitId: Long, limitUpdates: LimitUpdates) = transaction {
+        Limits.update ({ Limits.id eq limitId }){
+            it[amount] = limitUpdates.amount
+        }
     }
 
     fun deleteLimit(limitId: Long) = transaction {

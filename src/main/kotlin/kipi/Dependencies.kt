@@ -40,4 +40,5 @@ class Dependencies {
     val tinkoffTransactionsParseController =
         TinkoffTransactionsParseController(tinkoffTransactionsParseService, transactionService)
     val deleteUserInfoController = DeleteUserInfoController(transactionService, goalService, limitService, categoryService)
+    val updateLimitController = UpdateLimitController(limitService)
 }

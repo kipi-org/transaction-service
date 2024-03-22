@@ -2,6 +2,7 @@ package kipi.services
 
 import kipi.dto.Limit
 import kipi.dto.LimitDraft
+import kipi.dto.LimitUpdates
 import kipi.exceptions.CategoryException
 import kipi.exceptions.LimitCreateException
 import kipi.repositories.LimitRepository
@@ -26,6 +27,14 @@ class LimitService(
         )
         else limitDraft
         return limitRepository.createLimit(draft)
+    }
+
+    fun updateLimit(userId: Long, limitId: Long, limitUpdates: LimitUpdates) {
+        val categories = categoryService.findCategories(userId)
+        val limits = limitRepository.findLimits(categories.map { it.id })
+        if (limits.none { it.id == limitId }) return
+
+        limitRepository.updateLimits(limitId, limitUpdates)
     }
 
     fun findLimits(userId: Long): List<Limit> {
