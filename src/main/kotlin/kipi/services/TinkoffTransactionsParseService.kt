@@ -5,7 +5,6 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import kipi.dto.TransactionDraft
 import kipi.dto.tinkoff.TinkoffStatement
 import kipi.dto.tinkoff.TinkoffXmlRequest
-import kipi.exceptions.InvalidTinkoffDataException
 import kipi.utils.TinkoffParseUtils.parseTinkoffDate
 
 class TinkoffTransactionsParseService(
@@ -25,10 +24,10 @@ class TinkoffTransactionsParseService(
         tinkoffStatement.tinkoffBankMessageWrapper ?: return emptyList()
         val tinkoffTransactionsWithAccount =
             tinkoffStatement.tinkoffBankMessageWrapper.tinkoffBankMessage?.tinkoffTransactionsWithAccount
-                ?: throw InvalidTinkoffDataException("transaction.tinkoff.invalid")
+                ?: return emptyList()
         val categories = categoryService.findCategories(userId)
         val transactionsPack = tinkoffTransactionsWithAccount.tinkoffTransactionsPack?.tinkoffTransactions
-            ?: throw InvalidTinkoffDataException("transaction.tinkoff.invalid")
+            ?: return emptyList()
 
         return transactionsPack.map {
             TransactionDraft(
