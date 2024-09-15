@@ -6,7 +6,6 @@
 
     <include file="categories-updates.xml" relativeToChangelogFile="true"/>
     <include file="transactions-updates.xml" relativeToChangelogFile="true"/>
-    <include file="goals-updates.xml" relativeToChangelogFile="true"/>
     <include file="limits-updates.xml" relativeToChangelogFile="true"/>
     <include file="initial-data.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
