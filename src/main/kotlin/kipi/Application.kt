@@ -36,10 +36,6 @@ fun Application.init() {
             call.respond(Forbidden, ErrorResponse(cause.message))
         }
 
-        exception<GoalCreateException> { call, cause ->
-            call.respond(Forbidden, ErrorResponse(cause.message))
-        }
-
         exception<InvalidTinkoffDataException> { call, cause ->
             call.respond(Forbidden, ErrorResponse(cause.message))
         }
