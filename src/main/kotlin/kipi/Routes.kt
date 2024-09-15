@@ -52,16 +52,6 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                 }
             }
 
-            post<GoalDraft>("/goal") {
-                call.respond(OK, goalCreateController.handle(call.userId, it, call.accountsIds))
-            }
-
-            delete("/goal/{goalId}") {
-                goalDeleteController.handle(call.userId, call.goalId)
-
-                call.respond(OK)
-            }
-
             route("/categories") {
                 get {
                     call.respond(OK, categoriesFindController.handle(call.userId))
@@ -75,10 +65,6 @@ fun Application.routes(deps: Dependencies) = with(deps) {
 
             get("/limits") {
                 call.respond(OK, limitsFindController.handle(call.userId))
-            }
-
-            get("/goals") {
-                call.respond(OK, goalsFindController.handle(call.userId))
             }
 
             route("/transactions") {
@@ -157,9 +143,6 @@ private val ApplicationCall.categoryId: Long?
 
 private val ApplicationCall.limitId: Long
     get() = this.parameters.getOrFail("limitId").toLong()
-
-private val ApplicationCall.goalId: Long
-    get() = this.parameters.getOrFail("goalId").toLong()
 
 private val ApplicationCall.transactionId: Long
     get() = this.parameters.getOrFail("transactionId").toLong()
