@@ -19,7 +19,6 @@ class Dependencies {
     private val limitService = LimitService(limitRepository, categoryService, transactionService)
     private val goalService = GoalService(goalRepository, categoryService, transactionService)
     private val statisticsService = StatisticsService(transactionService)
-    private val tinkoffTransactionsParseService = TinkoffTransactionsParseService(categoryService)
     val transactionCreateController = TransactionCreateController(transactionService)
     val transactionFetchController = TransactionFetchController(transactionService)
     val categoryCreateController = CategoryCreateController(categoryService)
@@ -37,8 +36,7 @@ class Dependencies {
     val categoriesStatisticsController = CategoriesStatisticsController(statisticsService)
     val createBaseCategoriesController = CreateBaseCategoriesController(categoryService)
     val transactionUpdateController = TransactionUpdateController(transactionService, categoryService)
-    val tinkoffTransactionsParseController =
-        TinkoffTransactionsParseController(tinkoffTransactionsParseService, transactionService)
     val deleteUserInfoController = DeleteUserInfoController(transactionService, goalService, limitService, categoryService)
     val updateLimitController = UpdateLimitController(limitService)
+    val foreignTransactionCreateController = ForeignTransactionCreateController(transactionService)
 }

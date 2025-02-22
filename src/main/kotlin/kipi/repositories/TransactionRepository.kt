@@ -57,7 +57,7 @@ class TransactionRepository {
         page: Int? = null,
         pageSize: Int? = null,
         categoryId: Long? = null
-        ): List<Transaction> = transaction {
+    ): List<Transaction> = transaction {
         (Transactions innerJoin TransactionTypes innerJoin Categories).select {
             val isInList = accountId inList accountIds
             val isFrom = if (from != null) (Transactions.date greaterEq from) else Op.TRUE

@@ -2,11 +2,11 @@ package kipi
 
 import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import kipi.dto.*
-import kipi.dto.tinkoff.TinkoffXmlRequest
 import java.time.LocalDateTime
 
 fun Application.routes(deps: Dependencies) = with(deps) {
@@ -16,8 +16,8 @@ fun Application.routes(deps: Dependencies) = with(deps) {
         }
 
         route("/customer/{userId}") {
-            post<CategoryDraft>("/category") {
-                call.respond(OK, categoryCreateController.handle(call.userId, it))
+            post("/category") {
+                call.respond(OK, categoryCreateController.handle(call.userId, call.receive()))
             }
 
             delete {
@@ -33,8 +33,8 @@ fun Application.routes(deps: Dependencies) = with(deps) {
             }
 
             route("/limit") {
-                post<LimitDraft> {
-                    call.respond(OK, limitCreateController.handle(call.userId, it, call.accountsIds))
+                post {
+                    call.respond(OK, limitCreateController.handle(call.userId, call.receive(), call.accountsIds))
                 }
 
                 route("/{limitId}") {
@@ -44,16 +44,16 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                         call.respond(OK)
                     }
 
-                    put<LimitUpdates> {
-                        updateLimitController.handle(call.userId, call.limitId, it)
+                    put {
+                        updateLimitController.handle(call.userId, call.limitId, call.receive())
 
                         call.respond(OK)
                     }
                 }
             }
 
-            post<GoalDraft>("/goal") {
-                call.respond(OK, goalCreateController.handle(call.userId, it, call.accountsIds))
+            post("/goal") {
+                call.respond(OK, goalCreateController.handle(call.userId, call.receive(), call.accountsIds))
             }
 
             delete("/goal/{goalId}") {
@@ -96,11 +96,6 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                     )
                 }
 
-                post<TinkoffXmlRequest>("/tinkoff") {
-                    tinkoffTransactionsParseController.handle(call.userId, it)
-                    call.respond(OK)
-                }
-
                 get("/gaps/{gapType}") {
                     call.respond(
                         OK,
@@ -123,16 +118,19 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                     )
                 }
 
-                put<TransactionUpdates> {
-                    transactionUpdateController.handle(call.userId, call.transactionId, it)
+                put {
+                    transactionUpdateController.handle(call.userId, call.transactionId, call.receive())
 
                     call.respond(OK)
                 }
             }
 
             route("/account/{accountId}") {
-                post<TransactionDraft>("/transaction") {
-                    call.respond(OK, transactionCreateController.handle(call.userId, call.accountId, it))
+                post("/transaction") {
+                    call.respond(OK, transactionCreateController.handle(call.userId, call.accountId, call.receive()))
+                }
+                post("/transactions/foreign") {
+                    call.respond(OK, foreignTransactionCreateController.handle(call.accountId, call.receive()))
                 }
             }
 
