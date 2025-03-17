@@ -47,7 +47,8 @@ class TransactionService(
         accountIds: List<Long>
     ): TransactionsStatistics {
         val now = LocalDateTime.now()
-        val allTransactions = transactionRepository.findTransactions(accountIds)
+        val allTransactions =
+            if (accountIds.isEmpty()) emptyList() else transactionRepository.findTransactions(accountIds)
         val allAmount = allTransactions.map { it.amount }.reduceOrNull { am1, am2 ->
             am1 + am2
         } ?: ZERO
@@ -59,7 +60,9 @@ class TransactionService(
             .groupBy { it.date.year.toString() + it.date.month.toString() }
             .map { it.value }.map { it.sumOf { el -> el.amount } }
             .let { it.sumOf { el -> el } / it.size.toBigDecimal() }.abs()
-        val transactions = transactionRepository.findTransactions(accountIds, now.minusDays(30), now)
+        val transactions = if (accountIds.isEmpty()) emptyList() else transactionRepository.findTransactions(
+            accountIds, now.minusDays(30), now
+        )
         val income =
             transactions.filter { tx -> tx.amount >= ZERO }.map { tx -> tx.amount }.reduceOrNull { am1, am2 ->
                 am1 + am2
@@ -68,7 +71,17 @@ class TransactionService(
             transactions.filter { tx -> tx.amount < ZERO }.map { tx -> tx.amount }.reduceOrNull { am1, am2 ->
                 am1 + am2
             } ?: ZERO
+
         val incomeRemainder = income - outcome
+        if (income == ZERO || allAmount == ZERO || avgMonthIncome == ZERO || avgMonthOutcome == ZERO) {
+            return TransactionsStatistics(
+                incomeRemainder = incomeRemainder,
+                incomeRemainderPercentage = null,
+                income = income,
+                outcome = outcome,
+                fns = null,
+            )
+        }
         val incomeRemainderPercentage = (incomeRemainder / income) * BigDecimal(100)
         val savingRatioPercentage = (avgMonthIncome / allAmount) * 100.toBigDecimal()
         val savingRatio = when {
@@ -98,7 +111,6 @@ class TransactionService(
             fns = savingRatio + liquidityRisk + expenseControl,
         )
     }
-
 
     fun getTransactionsGaps(
         accountIds: List<Long>,

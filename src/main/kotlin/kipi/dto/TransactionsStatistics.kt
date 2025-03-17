@@ -4,8 +4,8 @@ import java.math.BigDecimal
 
 data class TransactionsStatistics(
     val incomeRemainder: BigDecimal,
-    val incomeRemainderPercentage: BigDecimal,
+    val incomeRemainderPercentage: BigDecimal?,
     val income: BigDecimal,
     val outcome: BigDecimal,
-    val fns: BigDecimal,
+    val fns: BigDecimal?,
 )
