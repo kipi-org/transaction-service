@@ -6,7 +6,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import kipi.dto.*
+import kipi.dto.GapType
 import java.time.LocalDateTime
 
 fun Application.routes(deps: Dependencies) = with(deps) {
@@ -100,6 +100,15 @@ fun Application.routes(deps: Dependencies) = with(deps) {
                     call.respond(
                         OK,
                         gapFetchController.handle(call.accountsIds, call.gapType, call.page, call.pageSize, call.categoryId)
+                    )
+                }
+
+                get("/statistics") {
+                    call.respond(
+                        OK,
+                        transactionStatisticsController.handle(
+                            call.accountsIds,
+                        )
                     )
                 }
             }

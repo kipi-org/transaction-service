@@ -39,4 +39,5 @@ class Dependencies {
     val deleteUserInfoController = DeleteUserInfoController(transactionService, goalService, limitService, categoryService)
     val updateLimitController = UpdateLimitController(limitService)
     val foreignTransactionCreateController = ForeignTransactionCreateController(transactionService)
+    val transactionStatisticsController = TransactionStatisticsController(transactionService)
 }

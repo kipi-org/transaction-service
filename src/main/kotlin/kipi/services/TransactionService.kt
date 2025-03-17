@@ -4,6 +4,7 @@ import kipi.dto.*
 import kipi.dto.GapType.*
 import kipi.exceptions.CategoryException
 import kipi.repositories.TransactionRepository
+import java.math.BigDecimal
 import java.math.BigDecimal.ZERO
 import java.time.DayOfWeek
 import java.time.LocalDate.now
@@ -40,6 +41,64 @@ class TransactionService(
         pageSize: Int = 15,
         categoryId: Long? = null
     ) = transactionRepository.findTransactions(accountIds, from, to, page, pageSize, categoryId)
+
+
+    fun getTransactionsStatistics(
+        accountIds: List<Long>
+    ): TransactionsStatistics {
+        val now = LocalDateTime.now()
+        val allTransactions = transactionRepository.findTransactions(accountIds)
+        val allAmount = allTransactions.map { it.amount }.reduceOrNull { am1, am2 ->
+            am1 + am2
+        } ?: ZERO
+        val avgMonthIncome = allTransactions.filter { tx -> tx.amount >= ZERO }
+            .groupBy { it.date.year.toString() + it.date.month.toString() }
+            .map { it.value }.map { it.sumOf { el -> el.amount } }
+            .let { it.sumOf { el -> el } / it.size.toBigDecimal() }
+        val avgMonthOutcome = allTransactions.filter { tx -> tx.amount < ZERO }
+            .groupBy { it.date.year.toString() + it.date.month.toString() }
+            .map { it.value }.map { it.sumOf { el -> el.amount } }
+            .let { it.sumOf { el -> el } / it.size.toBigDecimal() }.abs()
+        val transactions = transactionRepository.findTransactions(accountIds, now.minusDays(30), now)
+        val income =
+            transactions.filter { tx -> tx.amount >= ZERO }.map { tx -> tx.amount }.reduceOrNull { am1, am2 ->
+                am1 + am2
+            } ?: ZERO
+        val outcome =
+            transactions.filter { tx -> tx.amount < ZERO }.map { tx -> tx.amount }.reduceOrNull { am1, am2 ->
+                am1 + am2
+            } ?: ZERO
+        val incomeRemainder = income - outcome
+        val incomeRemainderPercentage = (incomeRemainder / income) * BigDecimal(100)
+        val savingRatioPercentage = (avgMonthIncome / allAmount) * 100.toBigDecimal()
+        val savingRatio = when {
+            savingRatioPercentage < BigDecimal(5) -> 0.toBigDecimal()
+            savingRatioPercentage < BigDecimal(20) -> 20.toBigDecimal()
+            else -> 40.toBigDecimal()
+        }
+        val liquidityRiskInMonths = allAmount / avgMonthOutcome
+        val liquidityRisk = when {
+            liquidityRiskInMonths < BigDecimal(1) -> 0.toBigDecimal()
+            liquidityRiskInMonths < BigDecimal(6) -> 15.toBigDecimal()
+            else -> 30.toBigDecimal()
+        }
+
+        val expenseControlPercentage = (avgMonthOutcome / avgMonthIncome) * 100.toBigDecimal()
+        val expenseControl = when {
+            expenseControlPercentage > BigDecimal(100) -> 0.toBigDecimal()
+            savingRatioPercentage > BigDecimal(70) -> 15.toBigDecimal()
+            else -> 30.toBigDecimal()
+        }
+
+        return TransactionsStatistics(
+            incomeRemainder = incomeRemainder,
+            incomeRemainderPercentage = incomeRemainderPercentage,
+            income = income,
+            outcome = outcome,
+            fns = savingRatio + liquidityRisk + expenseControl,
+        )
+    }
+
 
     fun getTransactionsGaps(
         accountIds: List<Long>,
