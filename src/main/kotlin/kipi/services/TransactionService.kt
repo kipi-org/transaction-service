@@ -55,11 +55,13 @@ class TransactionService(
         val avgMonthIncome = allTransactions.filter { tx -> tx.amount >= ZERO }
             .groupBy { it.date.year.toString() + it.date.month.toString() }
             .map { it.value }.map { it.sumOf { el -> el.amount } }
-            .let { it.sumOf { el -> el } / it.size.toBigDecimal() }
+            .let {
+                if (it.isEmpty()) ZERO else it.sumOf { el -> el } / it.size.toBigDecimal()
+            }
         val avgMonthOutcome = allTransactions.filter { tx -> tx.amount < ZERO }
             .groupBy { it.date.year.toString() + it.date.month.toString() }
             .map { it.value }.map { it.sumOf { el -> el.amount } }
-            .let { it.sumOf { el -> el } / it.size.toBigDecimal() }.abs()
+            .let { if (it.isEmpty()) ZERO else it.sumOf { el -> el } / it.size.toBigDecimal() }.abs()
         val transactions = if (accountIds.isEmpty()) emptyList() else transactionRepository.findTransactions(
             accountIds, now.minusDays(30), now
         )
@@ -70,7 +72,7 @@ class TransactionService(
         val outcome =
             transactions.filter { tx -> tx.amount < ZERO }.map { tx -> tx.amount }.reduceOrNull { am1, am2 ->
                 am1 + am2
-            } ?: ZERO
+            }?.abs() ?: ZERO
 
         val incomeRemainder = income - outcome
         if (income == ZERO || allAmount == ZERO || avgMonthIncome == ZERO || avgMonthOutcome == ZERO) {
